@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MVC Dome</title>
+</head>
+<body>
+<div class="page"> <!-- 要做一个 flex 布局，把四个模块包起来 -->
+<!--四个模块
+第一个是 加减乘除 四个按钮
+第二个是 tab 切换
+第三个是 图形变形
+第四个是 随鼠标移动有渐变色
+-->
+    <section id="app1">
+        <div class="output">
+            <span id="number">100</span>
+        </div>
+        <div class="actions">
+            <button id="add1">+1</button>
+            <button id="minus1">-1</button>
+            <button id="mul2">*2</button>
+            <button id="divide2">÷2</button>
+        </div>
+    </section>
+
+    <section id="app2">
+        <ol class="tab-bar">
+            <li><span>1111</span></li>
+            <li><span>2222</span></li>
+        </ol>
+        <ol class="tab-content">
+            <li>内容 1 </li>
+            <li>内容 2 </li>
+        </ol>
+    </section>
+
+    <section id="app3">
+        <div class="square"></div>
+    </section>
+
+    <section id="app4">
+        <div class="circle"></div>
+    </section>
+    <script src="main.js"></script>
+</div> <!-- 要做一个 flex 布局，把四个模块包起来 -->
+</body>
+</html>

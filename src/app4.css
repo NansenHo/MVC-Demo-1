@@ -1,0 +1,21 @@
+#app4{
+
+}
+@keyframes changeColor{ /* 声明一个动画 */
+    0%{
+        background: yellow;
+    }
+    100%{
+        background: deeppink;
+    }
+}
+#app4 .circle{
+    border: 1px solid red;
+    width: 25vw;
+    height: 25vw;
+    border-radius: 50%;
+}
+#app4 .circle.active{
+    animation: changeColor 1s infinite alternate linear;
+    /* infinite 无尽地； alternate 交替的； linear 线性的。*/
+}
