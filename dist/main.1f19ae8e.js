@@ -11294,6 +11294,11 @@ var _jquery = _interopRequireDefault(require("jquery"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var html = "\n    <section id=\"app1\">\n        <div class=\"output\">\n            <span id=\"number\">100</span>\n        </div>\n        <div class=\"actions\">\n            <button id=\"add1\">+1</button>\n            <button id=\"minus1\">-1</button>\n            <button id=\"mul2\">*2</button>\n            <button id=\"divide2\">\xF72</button>\n        </div>\n    </section>\n";
+var $element = (0, _jquery.default)(html).prependTo((0, _jquery.default)('body>.page')); // 把上面的字符串变成一个节点
+// jQuery 就会把上面的字符串变成一个 section 标签
+// 这样把 html 拿过来的好处是: 使用模块的人完全不用担心 html 是怎样的
+
 var $button1 = (0, _jquery.default)('#add1');
 var $button2 = (0, _jquery.default)('#minus1');
 var $button3 = (0, _jquery.default)('#mul2');
@@ -11342,6 +11347,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var $tabBar = (0, _jquery.default)('#app2 .tab-bar');
 var $tabContent = (0, _jquery.default)('#app2 .tab-content');
+var index = localStorage.getItem('app2.index') || 0; // 有可能 app2.index 还是空，所以要有一个保底值
+
+var html = "\n    <section id=\"app2\">\n        <ol class=\"tab-bar\">\n            <li><span>1111</span></li>\n            <li><span>2222</span></li>\n        </ol>\n        <ol class=\"tab-content\">\n            <li>\u5185\u5BB9 1 </li>\n            <li>\u5185\u5BB9 2 </li>\n        </ol>\n    </section>\n";
+var $element = (0, _jquery.default)(html).appendTo((0, _jquery.default)('body>.page'));
 $tabBar.on('click', 'li', function (e) {
   //jquery 提供了一个可以监听子元素的事件的方法
   // console.log(e.target) // 定位精确，点击了什么就是什么，比如说我把东西写 li 里面的 span 里，那最后就是 span 被打出来了。
@@ -11351,11 +11360,11 @@ $tabBar.on('click', 'li', function (e) {
   $li.addClass('selected').siblings().removeClass('selected');
   var index = $li.index(); // 知道 li 是第几个
 
-  console.log(index);
+  localStorage.setItem('app2.index', index);
   $tabContent.children().eq(index).addClass('active') // eq(index) 即 eq 等于第 index 个的意思。
   .siblings().removeClass('active'); // 用 addClass & removeClass ，JS 就不用去管 CSS 是怎么写的
 });
-$tabBar.children().eq(0).trigger('click'); // eq(0) 找到 index 等于 0 的
+$tabBar.children().eq(index).trigger('click'); // eq(0) 找到 index 等于 0 的
 // trigger('click') 触发其 click 事件1
 // summary
 // 注意 index 的用法
@@ -11373,10 +11382,31 @@ require("./app3.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var $square = (0, _jquery.default)('#app3 .square');
+var $square = (0, _jquery.default)('#app3 .square'); // 有三种情况：yes no undefined
+
+var active = localStorage.getItem('app3.active') === 'yes';
+var html = "\n    <section id=\"app3\">\n        <div class=\"square\"></div>\n    </section>\n";
+var $element = (0, _jquery.default)(html).appendTo((0, _jquery.default)('body>.page')); // if(active){
+//     $square.addClass('active')
+// }else{
+//     $square.removeClass('active')
+// }
+// 上面四行可以简化成下面的
+
+$square.toggleClass('active', active); // 会根据第二个参数是 true / false 来加不加第一个参数
+
 $square.on('click', function () {
-  $square.toggleClass('active'); // toggleClass 意思是如果有就删掉，如果没有就加上
+  if ($square.hasClass('active')) {
+    $square.removeClass('active');
+    localStorage.setItem('app3.active', 'no'); // 移除之后，记录下来
+  } else {
+    $square.addClass('active');
+    localStorage.setItem('app3.active', 'yes');
+  } // 如果方块上有 active 就删掉，没有就加上
+  // $square.toggleClass('active')
+  // toggleClass 意思是如果有就删掉，如果没有就加上
   // 有这个就能实现，让小方块被点击之后，往返移动
+
 }); // summary
 // 用到了 toggleClass
 },{"jquery":"../node_modules/jquery/dist/jquery.js","./app3.css":"app3.css"}],"app4.css":[function(require,module,exports) {
@@ -11393,7 +11423,9 @@ require("./app4.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var $circle = (0, _jquery.default)('#app4 .circle'); // 要监听 鼠标进去 和 鼠标出来 两个事件
+var $circle = (0, _jquery.default)('#app4 .circle');
+var html = "\n    <section id=\"app4\">\n        <div class=\"circle\"></div>\n    </section>\n";
+var $element = (0, _jquery.default)(html).appendTo((0, _jquery.default)('body>.page')); // 要监听 鼠标进去 和 鼠标出来 两个事件
 
 $circle.on('mouseenter', function () {
   $circle.addClass('active');
@@ -11443,7 +11475,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50714" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53738" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
